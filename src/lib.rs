@@ -1,3 +1,78 @@
+//! Autogeneration of `From` impls for enums and structs.
+//!
+//! ## Installation
+//!
+//! Add to `Cargo.toml`:
+//!
+//! ```toml
+//! derive-from-one = "0.1"
+//! ```
+//!
+//! ## Usage
+//! This macro generates `From` impls for enum constructors with a single field.
+//!
+//! If you don't want some impls to be generated, apply `#[from(skip)]` to this tag.
+//!
+//! Also, the macro would automatically skip ambiguous types, i.e., when a type appears in multiple tags regardless of amount of fields.
+//!
+//! Example:
+//!
+//! ```rust
+//! use derive_from_one::FromOne;
+//!
+//! #[derive(FromOne)]
+//! enum Enum {
+//!     A { a: u32 },           // GENERATES From impl
+//!     B(bool),                // GENERATES From impl
+//!     #[from(skip)]
+//!     C(String),              // DOES NOT GENERATE From impl due to #[from(skip)] attribute
+//!     D {                     // DOES NOT GENERATE From impl due to multiple fields
+//!         foo: Vec<String>,
+//!         bar: &'static str,
+//!     },
+//!     E(Vec<String>)          // DOES NOT GENERATE From impl due to Vec<String> appears in D tag
+//! }
+//! ```
+//!
+//! Generated code:
+//!
+//! ```rust
+//! enum Enum {
+//!     A { a: u32 },
+//!     B(bool),
+//!     C(String),
+//!     D {
+//!         foo: Vec<String>,
+//!         bar: &'static str,
+//!     },
+//!     E(Vec<String>)
+//! }
+//!
+//! impl From<u32> for Enum {
+//!     fn from(x: u32) -> Self {
+//!         Self::A { a: x }
+//!     }
+//! }
+//!
+//! impl From<bool> for Enum {
+//!     fn from(x: bool) -> Self {
+//!         Self::B(x)
+//!     }
+//! }
+//! ```
+//!
+//! You can also apply this macro to structs with a single field.
+//!
+//! ```rust
+//! use derive_from_one::FromOne;
+//!
+//! #[derive(FromOne)]
+//! struct StructOne(usize);
+//!
+//! #[derive(FromOne)]
+//! struct StructTwo { a: usize }
+//! ```
+
 extern crate proc_macro;
 
 use std::collections::HashMap;
