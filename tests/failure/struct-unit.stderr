@@ -1,0 +1,5 @@
+error: FromOne can only be used with structs with a single field
+ --> tests/failure/struct-unit.rs:4:12
+  |
+4 | pub struct T;
+  |            ^

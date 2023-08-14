@@ -1,0 +1,9 @@
+error[E0277]: the trait bound `T: From<{integer}>` is not satisfied
+  --> tests/failure/enum-duplicate-type-named-unnamed-multiple.rs:11:24
+   |
+11 |     let _: T = T::from(1);
+   |                ------- ^ the trait `From<{integer}>` is not implemented for `T`
+   |                |
+   |                required by a bound introduced by this call
+   |
+   = help: the trait `From<&'static str>` is implemented for `T`
