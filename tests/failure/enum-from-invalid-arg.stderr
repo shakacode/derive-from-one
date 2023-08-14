@@ -1,0 +1,5 @@
+error: Expected `#[from(skip)]`
+ --> tests/failure/enum-from-invalid-arg.rs:5:12
+  |
+5 |     #[from(ignore)]
+  |            ^^^^^^

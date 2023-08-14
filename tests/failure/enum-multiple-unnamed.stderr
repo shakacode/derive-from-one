@@ -1,0 +1,9 @@
+error[E0277]: the trait bound `T: From<bool>` is not satisfied
+  --> tests/failure/enum-multiple-unnamed.rs:11:24
+   |
+11 |     let _: T = T::from(true);
+   |                ------- ^^^^ the trait `From<bool>` is not implemented for `T`
+   |                |
+   |                required by a bound introduced by this call
+   |
+   = help: the trait `From<&'static str>` is implemented for `T`
